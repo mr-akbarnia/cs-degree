@@ -27,7 +27,7 @@ assignments and exams.
 
 | Phase | Course / Material | Key artifacts | Est. |
 |-------|-------------------|---------------|------|
-| 1 | **CS61A — Composing Programs** (Berkeley) + Missing Semester (MIT) | Hog, Cats, Ants, Scheme interpreter | 4–6 mo |
+| 1 | **CS61A — Composing Programs** (Berkeley, fa26) + Missing Semester (MIT) | Hog, Cats, Ants, Animator (+ Gleam labs) | 4–6 mo |
 | 2a | **Nand2Tetris** I & II | CPU, assembler, VM, compiler | 2–3 mo |
 | 2b | **CS:APP** (CMU 15-213) | bomb lab, attack lab, malloc lab, shell lab | 2–3 mo |
 | 3 | **Algorithms** (Sedgewick/Wayne, Princeton) + selected CLRS | continuous problem sets | 4–5 mo |
