@@ -10,6 +10,7 @@ gh label create exam        --color d93f0b --description "Timed, closed-book exa
 gh label create log         --color c5def5 --description "Weekly progress log" --force
 gh label create remediation --color fbca04 --description "Re-study triggered by exam error analysis" --force
 gh label create stalled     --color b60205 --description "Stuck >1 week — needs a decision, not more effort" --force
+gh label create algo-practice --color 0e8a16 --description "Background algorithms practice, ticking outside any single phase milestone" --force
 
 echo "== Milestones (one per course) =="
 milestones=(
@@ -27,8 +28,15 @@ milestones=(
 )
 repo=$(gh repo view --json nameWithOwner -q .nameWithOwner)
 for m in "${milestones[@]}"; do
-  gh api "repos/${repo}/milestones" -f title="$m" >/dev/null 2>&1 \
-    && echo "created: $m" || echo "exists:  $m"
+  if output=$(gh api "repos/${repo}/milestones" -f title="$m" 2>&1); then
+    echo "created: $m"
+  elif grep -q '"already_exists"' <<<"$output"; then
+    echo "exists:  $m"
+  else
+    echo "FAILED to create milestone: $m" >&2
+    echo "$output" >&2
+    exit 1
+  fi
 done
 
 echo
