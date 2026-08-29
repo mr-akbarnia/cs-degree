@@ -27,8 +27,15 @@ milestones=(
 )
 repo=$(gh repo view --json nameWithOwner -q .nameWithOwner)
 for m in "${milestones[@]}"; do
-  gh api "repos/${repo}/milestones" -f title="$m" >/dev/null 2>&1 \
-    && echo "created: $m" || echo "exists:  $m"
+  if output=$(gh api "repos/${repo}/milestones" -f title="$m" 2>&1); then
+    echo "created: $m"
+  elif grep -q '"already_exists"' <<<"$output"; then
+    echo "exists:  $m"
+  else
+    echo "FAILED to create milestone: $m" >&2
+    echo "$output" >&2
+    exit 1
+  fi
 done
 
 echo
